@@ -1,7 +1,33 @@
-# Creating an APF Plugin
+# Android Plugin Framework
+> This project is pre-mature and may be changed very frequently.
+
+## Introduction
+
+Android Plugin Framework (APF) aims to providing a flexible, extensible framework, for Android applications, like OSGi for Java applications. App developers can design their Android applications in a totally new way: declar the interface of a application component, put the actual implementations of the component on the remote server, use APF library to load the actual implementations at runtime. In this way, app developers can dynamically update application components, or add features to an already installed application, without requiring the application being updated throught Android System Framework. A typical usage scenario can be skin: designers design various skins for an application according to pre-defined format and then put those skin files online. App users can then find and use skins through `skin store`, without having to installing a new version of the app.   
+Another using scenario is for game design: design the `hard` level of a game in a different package that can be dynamically load into the game. When an user passes the `low` level of the game, the app can load the `hard` level of game code using APF dynamically. The user gets a seemlessly upgrade experience.
+ 
+The project consists 3 major components: 
+
+### APF core
+The core library to find, verify and load plugin code from remote servers. Now, the architecture and the remote server is still pre-mature and is subject to change, so it is not open sourced yet. But it will be soon. 
+
+### Plugin Build Scripts
+The instructions to create your own plugins. Check [Creating Your APF Plugin] for details.
+
+### Example
+Example contains: 
+
+1. Host application, Android Application Project. 
+2. Plugin Interface, as an Android Library Project
+3. Plugin Implementation, as an Android Application Project
+  
+There is already an example plugin implementation signed by [Umeng](http://www.umeng.com) and hosted on [Umeng](http://www.umeng.com)'s server side. If you want to try it out and have a different implementation, please contact xuxianming @ umeng.com
+
+
+## Creating Your APF Plugin
 To create a effective APD plugin, you will need to design plugin interface first in an Android Library Project. Next, implement the declared interface in an Android Application Project. 
 
-## Plugin Interface
+### Plugin Interface
 * Create an Android Library Project. 
 
 ```bash
@@ -45,7 +71,7 @@ apf-opensource/com.example.plugin1.ifs$ cp ../apf-plugin-build/build.xml.plugin.
 
 * Design the interface to be used by the host application. Check: `src/com/example/plugin1/ifs/`
 
-## Plugin Implementation
+### Plugin Implementation
 * Create an Android Application Project. 
 
 ```bash
@@ -85,8 +111,9 @@ The output will be at `${project.dir}/bin/com.example.plugina.apk` and `${projec
 See [com.example.host] and [com.example.plugin1]. 
 
 To Run the example: 
-```
+```bash
 ant 
+```
 
 
 

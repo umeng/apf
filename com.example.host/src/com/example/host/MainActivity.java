@@ -1,75 +1,120 @@
 package com.example.host;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.umeng.analytics.IMobClickAgent;
+import com.example.plugin1.ifs.ExampleApfService;
 import com.umeng.apf.ApfException;
 import com.umeng.apf.PluginManager;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getName();
-	private IMobClickAgent agent;
+	private ExampleApfService service;
+
+	EditText edit_a;
+	EditText edit_b;
+
+	TextView result;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 		Log.d(TAG, "onCreate");
 		//
-		try {
-			PluginManager.registerPlugin("com.umeng.common");
-			PluginManager.registerPlugin("com.umeng.analytics");
-			PluginManager.loadPlugins(this.getApplicationContext());
-			agent = (IMobClickAgent) PluginManager
-					.newInstance("com.umeng.analytics.internal.MobclickProxy");
-			if (agent == null)
-				throw new ApfException("unable to initialize plugin");
-		} catch (ApfException e) {
-			e.printStackTrace();
-		}
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					PluginManager.registerPlugin("com.example.plugin1");
+					PluginManager.loadPlugins(getApplicationContext());
+					service = (ExampleApfService) PluginManager
+							.newInstance("com.example.plugin1.ExampleApfServiceImpl");
+					if (service == null)
+						throw new ApfException("unable to initialize plugin");
+				} catch (ApfException e) {
+					e.printStackTrace();
+				}
 
+			}
+		}.start();
+
+		edit_a = (EditText) findViewById(R.id.edit_a);
+		edit_b = (EditText) findViewById(R.id.edit_b);
+		result = (TextView) findViewById(R.id.text_result);
+		this.findViewById(R.id.button_add).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						int a = Integer.parseInt(edit_a.getText().toString());
+						int b = Integer.parseInt(edit_b.getText().toString());
+
+						if (service != null) {
+							result.setText(service.add(a, b));
+						}
+					}
+
+				});
+
+		this.findViewById(R.id.button_minus).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						int a = Integer.parseInt(edit_a.getText().toString());
+						int b = Integer.parseInt(edit_b.getText().toString());
+
+						if (service != null) {
+							result.setText(service.minus(a, b));
+						}
+					}
+
+				});
+		this.findViewById(R.id.button_multiply).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						int a = Integer.parseInt(edit_a.getText().toString());
+						int b = Integer.parseInt(edit_b.getText().toString());
+
+						if (service != null) {
+							result.setText(service.multiply(a, b));
+						}
+					}
+
+				});
+		this.findViewById(R.id.button_divide).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						int a = Integer.parseInt(edit_a.getText().toString());
+						int b = Integer.parseInt(edit_b.getText().toString());
+
+						if (service != null) {
+							result.setText(service.divide(a, b));
+						}
+					}
+
+				});
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		Log.d(TAG, "onPause");
-		agent.onPause(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		Log.d(TAG, "onResume");
-		agent.setSessionContinueMillis(10000);
-		agent.onResume(this);
-	}
-
-	public void testProxy() {
-		InvocationHandler handler = new InvocationHandler() {
-
-			@Override
-			public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-				// do some processing before the method invocation
-				Log.d(TAG, proxy.getClass().getCanonicalName());
-				// invoke the method
-				Object result = method.invoke(proxy, args);
-
-				// do some processing after the method invocation
-				return result;
-			}
-
-		};
-
-		Object obj = Proxy.newProxyInstance(this.getClassLoader(),
-				new Class[] { Context.class }, handler);
-		obj.toString();
 	}
 }

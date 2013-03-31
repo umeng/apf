@@ -4,22 +4,47 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/text"
+    <EditText
+        android:id="@+id/edit_a"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="a"
+        android:inputType="numberSigned"/>"
+
+    <EditText
+        android:id="@+id/edit_b"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="b"
+        android:inputType="numberSigned"/>
+
+    <Button
+        android:id="@+id/button_add"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="+" />
 
     <Button
-        android:id="@+id/button_check"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_minus"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/check" />
+        android:text="-" />
 
     <Button
-        android:id="@+id/button_go"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_multiply"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/go" />
+        android:text="*" />
 
+    <Button
+        android:id="@+id/button_divide"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="/" />
+
+    <TextView
+        android:id="@+id/text_result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="result"/>
 </LinearLayout>
