@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/edit_a"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="a"
+        android:inputType="numberSigned"/>"
+
+    <EditText
+        android:id="@+id/edit_b"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="b"
+        android:inputType="numberSigned"/>
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/button_minus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/button_multiply"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="*" />
+
+    <Button
+        android:id="@+id/button_divide"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="/" />
+
+    <TextView
+        android:id="@+id/text_result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:hint="result"/>
+</LinearLayout>
